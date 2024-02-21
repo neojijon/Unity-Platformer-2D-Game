@@ -5,15 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class Finsish : MonoBehaviour
 {
+    [SerializeField] private string nextSceneName;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         if(collision.gameObject.name.Equals("Player"))
         {
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            DontDestroyOnLoad(collision.gameObject);
+
+            //Playercontroller playerControl = collision.gameObject.GetComponent<PlayerController>();
+            Debug.Log("Finish !!!!!");
+
+            //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             //SceneManager.LoadScene(currentSceneIndex + 1);
 
-            SceneManager.LoadScene("Scenes/Intro");
+            //SceneManager.LoadScene(nextSceneName);
         }        
     }
 }

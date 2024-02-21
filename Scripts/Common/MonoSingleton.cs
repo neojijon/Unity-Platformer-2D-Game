@@ -1,30 +1,32 @@
-ï»¿using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
-/// ì‹±ê¸€í†¤ìœ¼ë¡œ ì‚¬ìš©í•  ì˜¤ë¸Œì íŠ¸ë¥¼ í¸í•˜ê²Œ ë§Œë“¤ê¸° ìœ„í•œ í´ë˜ìŠ¤
-/// ì´ í´ë˜ìŠ¤ë¥¼ ìƒì†ë°›ìœ¼ë©´ ìì—°ìŠ¤ëŸ½ê²Œ ì‹±ê¸€í†¤ ì˜¤ë¸Œì íŠ¸ê°€ ëœë‹¤.
+/// ½Ì±ÛÅæÀ¸·Î »ç¿ëÇÒ ¿ÀºêÁ§Æ®¸¦ ÆíÇÏ°Ô ¸¸µé±â À§ÇÑ Å¬·¡½º
+/// ÀÌ Å¬·¡½º¸¦ »ó¼Ó¹ŞÀ¸¸é ÀÚ¿¬½º·´°Ô ½Ì±ÛÅæ ¿ÀºêÁ§Æ®°¡ µÈ´Ù.
 /// </summary>
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    protected static T _instance;			// ì¸ìŠ¤í„´ìŠ¤.
+    protected static T _instance;           // ÀÎ½ºÅÏ½º.
 
-	// static ìƒì„±ì.
+    // static »ı¼ºÀÚ.
     public static T Instance
     {
         get
         {
             if (_instance == null)
-            {                
-				// ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ê³  ì—†ìœ¼ë©´ ìƒˆë¡œ ë§Œë“ ë‹¤.
+            {
+                // ¿ÀºêÁ§Æ®¸¦ Ã£°í ¾øÀ¸¸é »õ·Î ¸¸µç´Ù.
                 _instance = FindObjectOfType(typeof(T)) as T;
 
                 if (_instance == null)
-                    _instance = new GameObject(typeof(T).Name, typeof(T)).GetComponent<T>();
-
+                {
+                    // _instance = new GameObject(typeof(T).Name, typeof(T)).GetComponent<T>();
+                    GameObject singletonObject = new GameObject(typeof(T).Name);
+                    _instance = singletonObject.AddComponent<T>();
+                }
                 SingletonList.AddSingleton<T>();
             }
-
             return _instance;
         }
     }

@@ -1,19 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
-    Movement playerMove;
+    Movement2D playerMove;
     Animator animator;
+    string message = "¸Þ¼¼Áö";
+
+    public bool bStartpointChaeck;
 
     void Start()
     {
-        playerMove = GetComponent<Movement>();
+        playerMove = GetComponent<Movement2D>();
         animator = GetComponent<Animator>();
+        GameObject.Find("Player").SetActive(true);
     }
-        
-    void Update()
+
+
+    private void OnEnable()
+    {
+        if(bStartpointChaeck)
+        {
+            //transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+            //transform.position = GameObject.Find("startPoint").transform.position;
+            bStartpointChaeck = false;
+
+            //Variables variables = GameObject.Find("VisualScripting SceneVariables").GetComponent<SceneVariables>();
+
+            //string mapname = variables.GetVariable("currentBattleMap")
+
+
+            
+
+        }
+    }
+    private void OnDisable()
+    {
+
+    }
+
+        void Update()
     {
         Moveing();
         Jump();

@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,12 +18,9 @@ public class LoadingSceneController : MonoBehaviour
 
     private void Start()
     {
-        //SceneManager.sceneLoaded += OnSceneLoaded;
-        //SceneManager.LoadScene("Scenes/Lobby");
-        //StartCoroutine(LoadSceneProgress());
-        //DontDestroyOnLoad(player);
+        SceneManager.sceneLoaded += OnSceneLoaded;        
+        StartCoroutine(LoadSceneProgress());        
         player.SetActive(false);
-
     }
 
     public void LoadingScene(string sceneName)
@@ -34,15 +28,16 @@ public class LoadingSceneController : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         lodingScene = sceneName;
         StartCoroutine(LoadSceneProgress());
-        //SceneManager.LoadScene(lodingScene);
+        player.SetActive(false);
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        if(arg0.name == lodingScene) {
+        if(arg0.name.Contains(lodingScene)) {
+            player.SetActive(true);
             Debug.Log(arg0.name);            
             SceneManager.sceneLoaded -= OnSceneLoaded;
-            StopCoroutine(LoadSceneProgress());            
+            //StopCoroutine(LoadSceneProgress());            
         }
         return;
     }
@@ -70,8 +65,7 @@ public class LoadingSceneController : MonoBehaviour
                 progressBar.fillAmount = Mathf.Lerp(0.9f, 1f, timer);
                 if(progressBar.fillAmount >= 1f)
                 {
-                    op.allowSceneActivation = true;
-                    player.SetActive(true);
+                    op.allowSceneActivation = true;                    
                     player.GetComponent<PlayerController>().bStartpointChaeck = true;
                     yield break;
                 }

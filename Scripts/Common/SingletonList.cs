@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,13 +19,17 @@ public class SingletonList
     public static void DeleteSingleton<T>()
     {
         System.Type systemType = typeof(T);
+
+        if (list.Contains(systemType))
+            return;
+
         list.Remove(systemType);
     }
 
     public static bool IsExist<T>()
     {
         System.Type systemType = typeof(T);
-        return list.Contains(systemType);        
+        return list.Contains(systemType);
     }
 
     public static void Clear()
